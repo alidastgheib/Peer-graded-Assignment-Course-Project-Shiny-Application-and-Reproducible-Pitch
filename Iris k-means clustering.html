@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!-- saved from url=(0022)http://127.0.0.1:5252/ -->
+<html class=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  
+  <script type="application/shiny-singletons"></script>
+  <script type="application/html-dependencies">json2[2014.02.04];jquery[1.12.4];shiny[1.1.0];selectize[0.11.2];bootstrap[3.3.7]</script>
+<script src="./Iris k-means clustering_files/json2-min.js.download"></script>
+<script src="./Iris k-means clustering_files/jquery.min.js.download"></script><style></style>
+<link href="./Iris k-means clustering_files/shiny.css" rel="stylesheet">
+<script src="./Iris k-means clustering_files/shiny.min.js.download"></script>
+<link href="./Iris k-means clustering_files/selectize.bootstrap3.css" rel="stylesheet">
+<!--[if lt IE 9]>
+<script src="shared/selectize/js/es5-shim.min.js"></script>
+<![endif]-->
+<script src="./Iris k-means clustering_files/selectize.min.js.download"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="./Iris k-means clustering_files/bootstrap.min.css" rel="stylesheet">
+<script src="./Iris k-means clustering_files/bootstrap.min.js.download"></script>
+<script src="./Iris k-means clustering_files/html5shiv.min.js.download"></script>
+<script src="./Iris k-means clustering_files/respond.min.js.download"></script>  <title>Iris k-means clustering</title>
+
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <h1>Iris k-means clustering</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <form class="well">
+          <div class="form-group shiny-input-container">
+            <label class="control-label" for="xcol">X Variable</label>
+            <div>
+              <select id="xcol" tabindex="-1" class="selectized shiny-bound-input" style="display: none;"><option value="Sepal.Length" selected="selected">Sepal.Length</option></select><div class="selectize-control single"><div class="selectize-input items full has-options has-items"><div data-value="Sepal.Length" class="item">Sepal.Length</div><input type="text" autocomplete="off" tabindex="" style="width: 4px;"></div><div class="selectize-dropdown single" style="display: none;"><div class="selectize-dropdown-content"></div></div></div>
+              <script type="application/json" data-for="xcol" data-nonempty="">{}</script>
+            </div>
+          </div>
+          <div class="form-group shiny-input-container">
+            <label class="control-label" for="ycol">Y Variable</label>
+            <div>
+              <select id="ycol" tabindex="-1" class="selectized shiny-bound-input" style="display: none;"><option value="Sepal.Width" selected="selected">Sepal.Width</option></select><div class="selectize-control single"><div class="selectize-input items full has-options has-items"><div data-value="Sepal.Width" class="item">Sepal.Width</div><input type="text" autocomplete="off" tabindex="" style="width: 4px;"></div><div class="selectize-dropdown single" style="display: none;"><div class="selectize-dropdown-content"></div></div></div>
+              <script type="application/json" data-for="ycol" data-nonempty="">{}</script>
+            </div>
+          </div>
+          <div class="form-group shiny-input-container">
+            <label for="clusters">Cluster count</label>
+            <input id="clusters" type="number" class="form-control shiny-bound-input" value="3" min="1" max="9">
+          </div>
+        </form>
+      </div>
+      <div class="col-sm-8">
+        <div id="plot1" class="shiny-plot-output shiny-bound-output" style="width: 100% ; height: 400px"><img src="data:image/png;base64,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" width="869" height="400"></div>
+        <h2>Instruction</h2>
+        <h3>This application performs K-means clustering.
+       You can create "two-feature" sub-dataset based on the Iris data by choosing your preferred
+       variables X and Y. You can also determine "number of groups" (Cluster count) for the purpose 
+       of clustering.</h3>
+        <h6> . </h6>
+        <h3>About K-means clustering:</h3>
+        <h4>k-means clustering aims to partition n observations into k 
+       clusters in which each observation belongs to the cluster 
+       with the nearest mean, serving as a prototype of the cluster.
+       This results in a partitioning of the data space into Voronoi cells.</h4>
+        <code>I used some of the example codes from:</code>
+        <code>https://shiny.rstudio.com/gallery/kmeans-example.html</code>
+      </div>
+    </div>
+  </div>
+
+
+
+</body></html>
