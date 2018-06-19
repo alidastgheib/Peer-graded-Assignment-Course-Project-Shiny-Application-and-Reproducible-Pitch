@@ -1,0 +1,49 @@
+---
+title       : Data Products Course, Final Project
+author      : Mohammad Ali Dastgheib
+job         : Amirkabir University of Technology, Tehran, Iran
+logo        : C:/Users/Ali_D/Desktop/logo_front.png
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js        # {highlight.js, prettify, highlight}
+date        : "June 15, 2018"
+hitheme     : tomorrow        # 
+url:
+  lib: ../../libraries
+  assets: ../../assets
+widgets     : [mathjax]        # {mathjax, quiz, bootstrap}
+mode        : selfcontained         # {standalone, draft}
+output      : ioslides_presentation
+---
+
+## Unsupervised Learning
+Unsupervised learning is a type of machine learning algorithm used to draw inferences from datasets consisting of input data without labeled responses. The most common unsupervised learning method is cluster analysis, which is used for exploratory data analysis to find hidden patterns or grouping in data.
+
+## Unsupervised Learning  -->  K-means Clustering
+k-means clustering aims to partition n observations into k clusters in which each observation belongs to the cluster with the nearest mean, serving as a prototype of the cluster. This results in a partitioning of the data space into Voronoi cells.
+
+## K-means Clustering with Iris data
+```{r, echo = FALSE, message = FALSE}
+data(iris); library(ggplot2); library(caret)
+inTrain <- createDataPartition(y = iris$Species,
+                              p=0.7, list=FALSE)
+training <- iris[inTrain,]
+testing <- iris[-inTrain,]
+
+kMeans1 <- kmeans(subset(training,select=-c(Species)),centers=3)
+training$clusters <- as.factor(kMeans1$cluster)
+qplot(Petal.Width,Petal.Length,colour=clusters,data=training)
+```
+
+## Thank You Very Much
+### Mohammad Ali Dastgheib
+##### https://www.linkedin.com/in/mohammad-ali-dastgheib-26785aa4/
+Research Assistant at Center of Innovation, 
+Technology & Entrepreneurship of 
+Amirkabir University of Technology, Tehran, Iran.
+```{r, echo = FALSE, message = FALSE}
+library("png")
+im_address = "C:/Users/Ali_D/Desktop/univ_full.png"
+p_logo <- readPNG(im_address)
+plot.new() 
+rasterImage(p_logo,0, 0, 1, 1)
+```
